@@ -8,7 +8,7 @@ import java.util.*;
 public class PhoneBook {
 
     Map <String, List<String>> mapPhone;
-    List<String> existingList;
+    List<String> existingList = new ArrayList<>();
 
     public PhoneBook(Map<String, List<String>> map) {
         this.mapPhone = map;
@@ -16,7 +16,7 @@ public class PhoneBook {
 
     public PhoneBook() {
 
-        this.mapPhone = new HashMap<>();
+        this.mapPhone = new LinkedHashMap<>();
        // this(null);
     }
 
@@ -31,7 +31,7 @@ public class PhoneBook {
        }
        else
        {
-           existingList = new ArrayList<>();
+          // existingList = new ArrayList<>();
            existingList.add(phoneNumber);
            mapPhone.put(name,existingList);
        }
@@ -48,7 +48,7 @@ public class PhoneBook {
         }
         else
         {
-            existingList = new ArrayList<>();
+           // existingList = new ArrayList<>();
             ArrayList ph = new ArrayList<String>(Arrays.asList(phoneNumbers));
             existingList.addAll(ph);
             mapPhone.put(name,existingList);
@@ -59,8 +59,9 @@ public class PhoneBook {
         mapPhone.remove(name);
     }
 
-    public Boolean hasEntry(String name) {
-        return mapPhone.containsKey(name);
+    public Boolean hasEntry(String phoneNumber) {
+        return reverseLookup(phoneNumber)!="";
+
     }
 
     public List<String> lookup(String name) {
@@ -70,6 +71,7 @@ public class PhoneBook {
     public String reverseLookup(String phoneNumber) {
         String nameofPhonenumber = "";
         Iterator it = mapPhone.entrySet().iterator();
+
         while(it.hasNext())
         {
             Map.Entry pair = (Map.Entry)it.next();
@@ -84,6 +86,7 @@ public class PhoneBook {
     }
 
     public List<String> getAllContactNames() {
+        existingList.clear();
         Set nameSet = mapPhone.keySet();
         existingList.addAll(nameSet);
         return existingList;
